@@ -6,69 +6,106 @@ description: >-
   asks to create, update, or synchronize root and hierarchical README.md file(s).
 ---
 
-# `readme-r`: Automatic README Synchronization Skill
+# `readme-r`: Automatic README Synchronization Runbook
 
-This skill guides the agent through an intelligent, safe, and structured workflow for generating, updating, and synchronizing project `README.md` files after making code changes. It ensures repository documentation never becomes stale, preserves existing custom prose and structure, maintains hierarchical subfolder READMEs, and presents a clear summary of updates.
+This skill provides an automated, structured runbook for keeping `README.md` files synchronized with repository changes. It preserves existing voice and human-authored prose, manages hierarchical sub-READMEs in modular projects, and generates comprehensive front-pages for new modules.
 
 ---
 
-## Workflow Steps
+## Table of Contents
 
-### Step 1: Run Change Detection
+- [Execution Workflow](#execution-workflow)
+- [Step 1: Inspect Repository Modifications](#step-1-inspect-repository-modifications)
+- [Step 2: Resolve Target README Scope](#step-2-resolve-target-readme-scope)
+- [Step 3: Execute Contextual Merging](#step-3-execute-contextual-merging)
+- [Step 4: Verify Formatting & Diff](#step-4-verify-formatting--diff)
+- [Step 5: Report Documentation Summary](#step-5-report-documentation-summary)
+- [Ambient Rule Integration](#ambient-rule-integration)
 
-Execute the bundled change detector script to inspect repository modifications, git diffs, package manifests, and changed modules:
+---
 
-```bash
-python3 scripts/detect_changes.py
-# (Or: python3 ~/.gemini/config/skills/readme-r/scripts/detect_changes.py)
-# (Or: python3 .agents/skills/readme-r/scripts/detect_changes.py)
+## Execution Workflow
+
+```mermaid
+flowchart TD
+    subgraph Phase1["1. Trigger & Inspection"]
+        A["Code / Refactor Completed"] --> B["scripts/detect_changes.py --json"]
+        B --> C["Extract Modified Files, Manifests & Env"]
+    end
+
+    subgraph Phase2["2. Scope Resolution Gate"]
+        C --> D{"Evaluate Target Paths"}
+        D -->|Root Repository Scope| E["Root README.md"]
+        D -->|Modular Submodule Scope| F["Hierarchical Sub-READMEs"]
+    end
+
+    subgraph Phase3["3. Contextual Merge Engine"]
+        E --> G["Preserve Invariants\n(Branding, Tone, Badges, Custom Sections)"]
+        F --> G
+        G --> H["Surgically Insert / Update\n(Features, Env Table, CLI, File Tree)"]
+    end
+
+    subgraph Phase4["4. Verification & Output"]
+        H --> I["Syntax & Markdown Anchor Check"]
+        I --> J["git diff Review"]
+        J --> K["Summary Presented to User"]
+    end
 ```
 
-For automated JSON parsing:
+---
+
+## Step 1: Inspect Repository Modifications
+
+Execute the bundled change detector script to inspect modified files, git diffs, package manifests, and newly added directories:
+
 ```bash
-python3 scripts/detect_changes.py --json
+# Locate detector:
+# 1. Local skill: skills/readme-r/scripts/detect_changes.py
+# 2. Plugin root: ~/.gemini/config/plugins/git-release-toolkit/skills/readme-r/scripts/detect_changes.py
+python3 skills/readme-r/scripts/detect_changes.py --json
 ```
 
 **Key Information to Extract:**
-1. **Modified Files**: What specific features, routes, components, or utilities were touched?
+1. **Modified Files**: Which specific components, routes, or utilities changed?
 2. **Dependency Manifests**: Were packages added or removed in `package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod`, etc.?
-3. **Environment Changes**: Were new environment variables introduced in `.env`, `.env.example`, or configuration files?
+3. **Environment Changes**: Were new environment variables introduced in `.env`, `.env.example`, or config files?
 4. **Target README Locations**: Determine whether updates affect the root `README.md`, sub-module READMEs, or both.
 
 ---
 
-### Step 2: Target README Resolution
+## Step 2: Resolve Target README Scope
 
-Consult the [Documentation Guidelines](./references/doc_guidelines.md) for hierarchical rules:
+Consult [doc_guidelines.md](./references/doc_guidelines.md) for hierarchical rules:
 
 1. **Root README**:
-   - Path: `README.md` in repository root.
-   - Purpose: Project high-level architecture, primary features, installation prerequisites, global configuration, and module directory map.
+   - **Path**: `README.md` in repository root.
+   - **Scope**: Repository-wide architecture, global features, quick start, prerequisites, and submodule directory map.
 2. **Hierarchical Sub-READMEs**:
-   - Paths: `<submodule>/README.md` (e.g. `packages/<pkg>/README.md`, `services/<svc>/README.md`, `apps/<app>/README.md`, `skills/<skill>/README.md`).
-   - Purpose: Package-specific APIs, local commands, isolated setup, and scoped examples.
-   - **Rule**: If a new submodule, package, or service was created, generate a dedicated `README.md` in that folder. If an existing submodule was altered, update its local `README.md`.
+   - **Paths**: `<submodule>/README.md` (e.g. `packages/<pkg>/README.md`, `services/<svc>/README.md`, `apps/<app>/README.md`, `skills/<skill>/README.md`).
+   - **Scope**: Package-specific APIs, local commands, isolated setup, and scoped examples.
+   - **Creation Rule**: If a new submodule, package, or service was created, generate a dedicated `README.md` in that folder using the standard template. If an existing submodule was altered, update its local `README.md`.
 
 ---
 
-### Step 3: Contextual Merging & Drafting
+## Step 3: Execute Contextual Merging
 
-#### Scenario A: Existing `README.md` (Intelligent Contextual Merge)
-Do **not** overwrite the whole file. Follow the contextual merge protocol in [doc_guidelines.md](./references/doc_guidelines.md):
-- **Preserve**: Keep project title, branding, badges, mission statement, custom callouts, existing ordering, and untouched sections.
+### Scenario A: Existing `README.md` (Intelligent Contextual Merge)
+Do **not** overwrite the whole file. Follow the contextual merge protocol:
+- **Preserve**: Keep project title, branding, badges, mission statement, custom callouts, existing ordering, and untouched human-authored sections.
 - **Update / Insert**:
   - **Features**: Append bullet points for new capabilities; update descriptions for modified behaviors.
   - **Quick Start / Prerequisites**: Update runtime versions or required dependencies if new ones were introduced.
   - **Usage & Examples**: Update or add realistic code snippets demonstrating new functions, CLI flags, or API endpoints.
   - **Configuration**: Synchronize the environment variables table with `.env.example`.
-  - **Scripts & Commands**: Add any new npm/cargo/poetry scripts or Makefile targets.
+  - **Commands**: Add new lifecycle scripts or CLI command options.
   - **Architecture / Directory Tree**: Update file tree or Mermaid diagram if new directories were created.
 
-#### Scenario B: New or Missing `README.md`
-If no README exists, use the [Comprehensive Modern GitHub Template](./resources/standard_template.md) as the blueprint. Populate:
+### Scenario B: New or Missing `README.md`
+If no README exists, use [`resources/standard_template.md`](./resources/standard_template.md) as the blueprint. Populate:
 - Project title, concise tagline, and status badges.
+- Table of Contents with working anchor links.
 - Core features and problem statement.
-- Architecture diagram (`mermaid`) and directory structure.
+- Multi-tier Mermaid architecture diagram and directory structure.
 - Prerequisites, step-by-step installation, and environment setup.
 - Working usage examples with syntax-highlighted code blocks.
 - Configuration table and development/testing commands.
@@ -76,21 +113,22 @@ If no README exists, use the [Comprehensive Modern GitHub Template](./resources/
 
 ---
 
-### Step 4: Apply Updates & Verify Diffs
+## Step 4: Verify Formatting & Diff
 
-1. Use `replace_file_content` or `write_to_file` to write the updated content.
+1. Write the updated markdown content using standard edit/write tools.
 2. Run `git diff` on the target README file(s) to verify:
    ```bash
    git diff README.md
    ```
-3. Check that:
-   - Formatting and markdown syntax are clean and valid.
-   - Code blocks have proper language tags (`bash`, `typescript`, `python`, `json`, etc.).
-   - All relative links and anchors are intact.
+3. Audit checklist:
+   - [ ] No emoji clutter in section headings.
+   - [ ] Clean markdown syntax and valid language tags (`bash`, `typescript`, `python`, `json`, `yaml`).
+   - [ ] Table of Contents anchor links match corresponding headings.
+   - [ ] Untouched human-authored sections remain intact.
 
 ---
 
-### Step 5: Report Summary to User
+## Step 5: Report Documentation Summary
 
 Following the **Preview & Apply** approach:
 1. Provide a concise, bulleted summary of the sections that were updated or created.
@@ -99,7 +137,6 @@ Following the **Preview & Apply** approach:
 
 ---
 
-## Automatic Enforcement
+## Ambient Rule Integration
 
-To ensure this skill runs automatically whenever code changes occur, install the companion rule:
-- Copy [rules/readme-sync.md](./rules/readme-sync.md) to `.agents/rules/readme-sync.md` (for the current project) or `~/.gemini/config/rules/readme-sync.md` (for global enforcement).
+The ambient rule in [`rules/AGENTS.md`](../../rules/AGENTS.md) enforces this runbook across all conversations. Whenever code, package manifests, or project structures change, this skill must be evaluated before concluding the turn.

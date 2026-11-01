@@ -14,16 +14,6 @@ Use this template as the foundational blueprint when generating a new `README.md
 </p>
 
 <p align="center">
-  <a href="#features">Features</a> •
-  <a href="#architecture">Architecture</a> •
-  <a href="#quick-start">Quick Start</a> •
-  <a href="#usage">Usage</a> •
-  <a href="#configuration">Configuration</a> •
-  <a href="#development">Development</a> •
-  <a href="#license">License</a>
-</p>
-
-<p align="center">
   <img src="https://img.shields.io/badge/version-<version>-blue.svg?style=flat-square" alt="Version" />
   <img src="https://img.shields.io/badge/license-<license>-green.svg?style=flat-square" alt="License" />
   <img src="https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat-square" alt="Build Status" />
@@ -32,13 +22,30 @@ Use this template as the foundational blueprint when generating a new `README.md
 
 ---
 
-## 🌟 Overview
+## Table of Contents
+
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [System Architecture](#system-architecture)
+- [Directory Structure](#directory-structure)
+- [Quick Start](#quick-start)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage & Examples](#usage--examples)
+- [Configuration](#configuration)
+- [Development & Testing](#development--testing)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Overview
 
 <2-3 concise paragraphs providing an executive overview of the project, problem statement solved, and target audience or runtime ecosystem.>
 
 ---
 
-## ✨ Features
+## Key Features
 
 - **<Feature 1 Name>**: <Concise explanation of feature capability and value.>
 - **<Feature 2 Name>**: <Concise explanation of feature capability and value.>
@@ -47,32 +54,44 @@ Use this template as the foundational blueprint when generating a new `README.md
 
 ---
 
-## 🏗️ Architecture & Project Structure
+## System Architecture
 
 <Brief sentence describing the design pattern, modular breakdown, or system flow.>
 
 ```mermaid
-graph TD
-    Client[Client / Caller] --> API[API Gateway / Router]
-    API --> Service[Core Service Layer]
-    Service --> Storage[(Data Store / State)]
-```
+flowchart TD
+    subgraph Ingress["Client & Ingress Layer"]
+        Client["Client / CLI Caller"] --> Gateway["API Gateway / Router"]
+    end
 
-### Directory Structure
+    subgraph Core["Core Application Layer"]
+        Gateway --> Service["Domain Service Logic"]
+        Service --> Worker["Background Task Workers"]
+    end
 
-```text
-├── src/                # Primary application source code
-│   ├── components/     # Reusable UI/logic components
-│   ├── services/       # Core business logic and integrations
-│   └── utils/          # Shared utility helpers
-├── tests/              # Unit, integration, and e2e test suites
-├── docs/               # In-depth architectural guides and specifications
-└── package.json        # Dependencies, lifecycle scripts, and metadata
+    subgraph State["Persistence & State"]
+        Service --> Storage[("Primary Database")]
+        Service --> Cache[("Distributed Cache / Redis")]
+    end
 ```
 
 ---
 
-## 🚀 Quick Start
+## Directory Structure
+
+```text
+├── src/                               # Primary application source code
+│   ├── components/                    # Reusable UI/logic components
+│   ├── services/                      # Core business logic and integrations
+│   └── utils/                         # Shared utility helpers
+├── tests/                             # Unit, integration, and e2e test suites
+├── docs/                              # In-depth architectural guides and specifications
+└── package.json                       # Dependencies, lifecycle scripts, and metadata
+```
+
+---
+
+## Quick Start
 
 ### Prerequisites
 
@@ -107,7 +126,7 @@ Ensure you have the following installed locally:
 
 ---
 
-## 💡 Usage & Examples
+## Usage & Examples
 
 ### Basic Example
 
@@ -128,7 +147,7 @@ console.log(result);
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Key environment variables required or supported:
 
@@ -140,7 +159,7 @@ Key environment variables required or supported:
 
 ---
 
-## 🛠️ Development & Testing
+## Development & Testing
 
 Run common development tasks:
 
@@ -158,7 +177,7 @@ npm run build
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](<repo_issues_url>).
 
@@ -170,7 +189,7 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the terms of the [<License Name>](./LICENSE) license.
 ```

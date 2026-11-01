@@ -1,22 +1,11 @@
 # readme-r
 
 <p align="center">
-  <strong>Autonomous README Synchronization & Maintenance Skill for Antigravity Agents</strong>
+  <strong>Autonomous README synchronization and contextual maintenance skill for AI coding agents and human developers.</strong>
 </p>
 
 <p align="center">
-  <a href="#-overview">Overview</a> •
-  <a href="#-features">Features</a> •
-  <a href="#-architecture">Architecture</a> •
-  <a href="#-package-structure">Structure</a> •
-  <a href="#-installation--setup">Installation</a> •
-  <a href="#-usage--cli-reference">Usage</a> •
-  <a href="#-companion-rule">Rule</a> •
-  <a href="#-license">License</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg?style=flat-square" alt="Version 1.0.0" />
+  <img src="https://img.shields.io/badge/version-1.0.2-blue.svg?style=flat-square" alt="Version 1.0.2" />
   <img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License MIT" />
   <img src="https://img.shields.io/badge/antigravity-skill-purple.svg?style=flat-square" alt="Antigravity Skill" />
   <img src="https://img.shields.io/badge/python-%3E%3D3.8-informational.svg?style=flat-square" alt="Python Version" />
@@ -24,103 +13,123 @@
 
 ---
 
-## 🌟 Overview
+## Table of Contents
 
-**`readme-r`** is a specialized Antigravity skill and companion rule that prevents documentation rot by automatically synchronizing, updating, and generating `README.md` files whenever code, dependencies, or project structures change.
-
-Traditional documentation workflows often fall out of sync with code modifications. `readme-r` couples an automated change-detection script with an intelligent contextual merging engine. This ensures that new features, altered CLI arguments, updated environment variables, and new sub-modules are reliably documented without clobbering human-authored prose, brand voice, or custom layouts.
-
----
-
-## ✨ Features
-
-- **Autonomous Self-Execution**: Works seamlessly with [`rules/readme-sync.md`](./rules/readme-sync.md) so agents automatically evaluate and update README files after completing code changes or refactors.
-- **Hierarchical Documentation**: Manages both root repository `README.md` files and nested submodule/package READMEs (e.g., monorepos, `packages/*`, `services/*`, `apps/*`, `skills/*`).
-- **Contextual Merging Engine**: Surgically inserts and updates features, configuration tables, and command references while preserving existing human branding, tone, badges, and custom callouts.
-- **Fast Change Detection Engine**: Includes a standalone Python utility ([`scripts/detect_changes.py`](./scripts/detect_changes.py)) that inspects git status, diffs, package manifests (`package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod`), and environment files.
-- **Modern GitHub Standards**: Ships with a comprehensive, professional template ([`resources/standard_template.md`](./resources/standard_template.md)) featuring shields, Mermaid diagrams, quick-start guides, and configuration tables.
+- [Overview](#overview)
+- [Key Capabilities](#key-capabilities)
+- [Pipeline Architecture](#pipeline-architecture)
+- [Package Structure](#package-structure)
+- [Installation & Setup](#installation--setup)
+- [Usage & CLI Reference](#usage--cli-reference)
+- [Companion Ambient Rule](#companion-ambient-rule)
+- [License](#license)
 
 ---
 
-## 🏗️ Architecture
+## Overview
+
+**`readme-r`** is a specialized documentation synchronization skill designed to eliminate documentation drift in fast-paced software development and agentic pair programming.
+
+During continuous code changes, API routes shift, configuration variables are introduced, and dependencies evolve, but repository `README.md` files are frequently overlooked. `readme-r` pairs an automated repository change-detection script with an intelligent contextual merging engine. It automatically identifies altered components and surgically updates project documentation without clobbering human-authored tone, brand voice, or custom layouts.
+
+---
+
+## Key Capabilities
+
+- **Autonomous Self-Execution**: Couples with ambient agent rules ([`rules/AGENTS.md`](../../rules/AGENTS.md)) to automatically audit and update documentation after code changes.
+- **Contextual Merging Engine**: Surgically updates features, environment configuration tables, CLI flags, and directory trees while strictly preserving human branding, tone, badges, and custom callouts.
+- **Hierarchical Documentation**: Coordinates both root repository `README.md` files and nested submodule/package READMEs across monorepos and multi-package layouts (`packages/*`, `services/*`, `apps/*`, `skills/*`).
+- **Fast Change Detection**: Bundles a zero-dependency Python utility ([`scripts/detect_changes.py`](./scripts/detect_changes.py)) that inspects git status, diffs, package manifests (`package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod`), and environment files.
+- **Modern GitHub Standards**: Includes an enterprise-grade GitHub template ([`resources/standard_template.md`](./resources/standard_template.md)) featuring subgraphs, structured tables of contents, and configuration matrices.
+
+---
+
+## Pipeline Architecture
+
+The synchronization workflow processes changes through four distinct operational phases:
 
 ```mermaid
-graph TD
-    A["Agent Completes Code Changes"] --> B{"readme-sync Rule Triggered?"}
-    B -->|Yes| C["Run scripts/detect_changes.py"]
-    C --> D["Analyze Git Diffs & Manifests"]
-    D --> E{"Resolve Target READMEs"}
-    E -->|Root Repository Scope| F["Root README.md"]
-    E -->|Modular Submodule Scope| G["Hierarchical Sub-READMEs"]
-    F --> H["Apply Contextual Merge Protocol"]
-    G --> H
-    H --> I["Verify Markdown & Git Diff"]
-    I --> J["Synchronized Documentation Ready"]
+flowchart TD
+    subgraph Phase1["1. Trigger & Inspection"]
+        A["Code / Refactor Completed"] --> B["scripts/detect_changes.py"]
+        B --> C["Inspect Git Status, Diffs & Manifests"]
+    end
+
+    subgraph Phase2["2. Scope Resolution Gate"]
+        C --> D{"Determine Target Scope"}
+        D -->|Root Repository Scope| E["Root README.md"]
+        D -->|Modular Submodule Scope| F["Hierarchical Sub-READMEs"]
+    end
+
+    subgraph Phase3["3. Contextual Merge Engine"]
+        E --> G["Preserve Invariants\n(Branding, Voice, Badges, Notes)"]
+        F --> G
+        G --> H["Surgically Insert / Update\n(Features, Env Table, CLI, File Tree)"]
+    end
+
+    subgraph Phase4["4. Verification & Output"]
+        H --> I["Format & Lint Validation"]
+        I --> J["git diff Audit"]
+        J --> K["Synchronized Documentation Ready"]
+    end
 ```
 
 ---
 
-## 📁 Package Structure
+## Package Structure
 
 ```text
 readme-r/
-├── SKILL.md                          # Main skill runbook and procedure instructions
-├── scripts/
-│   └── detect_changes.py             # Change detection & manifest inspection utility
-├── resources/
-│   └── standard_template.md          # Comprehensive GitHub README template blueprint
+├── README.md                          # Skill overview and documentation
+├── SKILL.md                           # Master skill definition and execution runbook
 ├── references/
-│   └── doc_guidelines.md             # Contextual merge principles & style guidelines
-├── rules/
-│   └── readme-sync.md                # Companion rule to enforce automatic execution
-├── .gitignore                        # Git exclusion rules
-└── README.md                         # Project documentation and setup guide
+│   └── doc_guidelines.md              # Contextual merge principles & style standards
+├── resources/
+│   └── standard_template.md           # Modern GitHub README blueprint
+└── scripts/
+    └── detect_changes.py              # Repository inspector and diff analyzer CLI
 ```
 
 ---
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
-### 1. Global Installation (Machine-Local, All Projects)
-To make `readme-r` available across all projects on your machine, install it into `~/.gemini/config/`:
+### 1. Bundled with `git-release-toolkit` (Recommended)
+
+`readme-r` is bundled directly within the **Git & Release Toolkit** plugin:
 
 ```bash
-# Create target skill and rules directories
-mkdir -p ~/.gemini/config/skills/readme-r ~/.gemini/config/rules
-
-# Clone or copy readme-r files
-git clone https://github.com/kemaltombul/readme-r.git /tmp/readme-r
-cp -r /tmp/readme-r/* ~/.gemini/config/skills/readme-r/
-cp ~/.gemini/config/skills/readme-r/rules/readme-sync.md ~/.gemini/config/rules/readme-sync.md
+git clone https://github.com/kemaltombul/git-release-toolkit.git ~/.gemini/config/plugins/git-release-toolkit
 ```
 
-### 2. Workspace Installation (Project-Specific)
-To share `readme-r` with your team within a specific repository, place it inside `.agents/`:
+Once installed, the ambient rule in `rules/AGENTS.md` automatically activates `readme-r` for relevant code changes.
+
+### 2. Standalone Workspace Installation
+
+To use `readme-r` as a project-local skill without the full plugin:
 
 ```bash
-# In your repository root:
-mkdir -p .agents/skills/readme-r .agents/rules
+mkdir -p .agents/skills/readme-r
 cp -r /path/to/readme-r/* .agents/skills/readme-r/
-cp .agents/skills/readme-r/rules/readme-sync.md .agents/rules/readme-sync.md
 ```
 
 ---
 
-## 💡 Usage & CLI Reference
+## Usage & CLI Reference
 
 ### Change Detection Helper
 
-You can manually inspect what changes are detected in any working tree:
+Run the inspector directly from your terminal to analyze pending modifications:
 
 ```bash
 # Human-readable summary
-python3 scripts/detect_changes.py
+python3 skills/readme-r/scripts/detect_changes.py
 
 # Machine-readable JSON output
-python3 scripts/detect_changes.py --json
+python3 skills/readme-r/scripts/detect_changes.py --json
 
-# Target a specific repository path
-python3 scripts/detect_changes.py --dir /path/to/repo --json
+# Inspect a specific target directory
+python3 skills/readme-r/scripts/detect_changes.py --dir /path/to/repo --json
 ```
 
 #### CLI Options
@@ -157,7 +166,9 @@ When invoked with `--json`, `detect_changes.py` outputs structured metadata:
     "hierarchical_readmes": {}
   },
   "manifests": {
-    "package.json": { ... }
+    "package.json": {
+      "dependencies": { "express": "^4.19.2" }
+    }
   },
   "diff_snippet": "..."
 }
@@ -165,9 +176,10 @@ When invoked with `--json`, `detect_changes.py` outputs structured metadata:
 
 ---
 
-## 📋 Companion Rule
+## Companion Ambient Rule
 
-The bundled [`rules/readme-sync.md`](./rules/readme-sync.md) rule activates whenever:
+The ambient rule in [`rules/AGENTS.md`](../../rules/AGENTS.md) triggers the `readme-r` workflow automatically whenever:
+
 1. **New or Modified Functionality**: New features, updated API routes, CLI arguments, or changed component behaviors.
 2. **Dependency & Environment Updates**: Added or removed packages in manifests (`package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod`) or changed `.env` keys.
 3. **Structural Changes**: New submodules, packages, or services created under `packages/`, `services/`, `apps/`, or `skills/`.
@@ -175,6 +187,6 @@ The bundled [`rules/readme-sync.md`](./rules/readme-sync.md) rule activates when
 
 ---
 
-## 📄 License
+## License
 
-This project is licensed under the terms of the [MIT License](./README.md).
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).

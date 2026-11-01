@@ -48,17 +48,21 @@ For projects with multiple packages, services, or plugins (e.g., monorepos, micr
 
 ## 3. High-Impact Writing Standards
 
+- **Clean Typography (Zero Emoji Clutter)**: Avoid decorative emojis in section headers (`## 🌟 Overview`). Keep headers clean (`## Overview`) to maintain a professional tone and ensure consistent GitHub anchor generation without broken `#--` links.
+- **Dedicated Table of Contents**: Include a structured `## Table of Contents` with clean markdown links for documents longer than 1-2 viewport heights.
 - **Active & Imperative Mood**: Use "Run the test suite with `npm test`" instead of "The test suite can be run using...".
 - **Real & Tested Code Examples**: Never put pseudo-code or broken imports. Use exact module names and working syntax.
-- **Mermaid Diagrams**:
-  - Keep diagrams clean and concise (prefer top-to-bottom `graph TD` or left-to-right `graph LR`).
-  - Quote labels containing special characters: `client["Client (REST / CLI)"]`.
-  - Avoid unnecessary nesting or over-complicated nodes.
+- **Structured Mermaid Pipelines (Subgraphs)**:
+  - Avoid flat, linear 1D chains of nodes.
+  - Group related steps or architectural layers using `subgraph` blocks (e.g. `Ingress`, `Application Core`, `State / Persistence`, or `Trigger`, `Resolution`, `Execution`).
+  - Keep node labels concise and quote labels containing special characters: `client["Client (REST / CLI)"]`.
 - **Tables for Structured Data**: Use GitHub markdown tables for configuration variables, CLI arguments, and API routes.
 
 ---
 
 ## 4. Verification Checklist Before Saving
+- [ ] Are all section headers free of decorative emoji clutter?
+- [ ] Does the Table of Contents have valid anchor links matching headers?
 - [ ] Are all relative links (`./docs/...`, `./src/...`) valid?
 - [ ] Did you preserve existing custom sections that were not affected by the changes?
 - [ ] Are code block syntax highlighters specified (`bash`, `typescript`, `python`, `json`, `yaml`)?
