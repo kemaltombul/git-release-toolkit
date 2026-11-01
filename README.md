@@ -5,18 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="#-overview">Overview</a> •
-  <a href="#-bundled-components">Bundled Components</a> •
-  <a href="#-architecture--pipeline">Architecture</a> •
-  <a href="#-installation--setup">Installation</a> •
-  <a href="#-usage--examples">Usage</a> •
-  <a href="#-cli-tools">CLI Tools</a> •
-  <a href="#-environment--security">Security</a> •
-  <a href="#-license">License</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg?style=flat-square" alt="Version" />
+  <img src="https://img.shields.io/badge/version-1.0.2-blue.svg?style=flat-square" alt="Version 1.0.2" />
   <img src="https://img.shields.io/badge/Antigravity-Plugin-purple.svg?style=flat-square" alt="Antigravity Plugin" />
   <img src="https://img.shields.io/badge/Conventional%20Commits-v1.0.0-yellow.svg?style=flat-square" alt="Conventional Commits" />
   <img src="https://img.shields.io/badge/SemVer-2.0.0-orange.svg?style=flat-square" alt="SemVer 2.0.0" />
@@ -26,7 +15,21 @@
 
 ---
 
-## 🌟 Overview
+## Table of Contents
+
+- [Overview](#overview)
+- [Bundled Components](#bundled-components)
+- [Architecture & Pipeline](#architecture--pipeline)
+- [Installation & Setup](#installation--setup)
+- [Usage & Examples](#usage--examples)
+- [CLI Reference](#cli-reference)
+- [Security & Environment Hygiene](#security--environment-hygiene)
+- [Repository Layout](#repository-layout)
+- [License](#license)
+
+---
+
+## Overview
 
 **Git & Release Toolkit** is an all-in-one Antigravity plugin engineered to transform AI pair programming and development workflows into rigorous, production-grade release pipelines.
 
@@ -39,7 +42,7 @@ By uniting **`commiter`** (atomic staging, Conventional Commits, SemVer, remote 
 
 ---
 
-## 📦 Bundled Components
+## Bundled Components
 
 | Component | Path | Type | Purpose |
 | :--- | :--- | :--- | :--- |
@@ -51,7 +54,7 @@ By uniting **`commiter`** (atomic staging, Conventional Commits, SemVer, remote 
 
 ---
 
-## 🏗️ Architecture & Pipeline
+## Architecture & Pipeline
 
 ```mermaid
 flowchart TD
@@ -74,15 +77,26 @@ flowchart TD
     end
 
     subgraph Pipeline["Integrated 10-Step Operational Flow"]
-        P1["Step 1: Inspect Working Tree & Secrets Audit"] --> P2["Step 2: README Synchronization Gate\n(Calls readme-r to detect staleness & merge)"]
-        P2 --> P3["Step 3: Atomic Commit Analysis & Staging"]
-        P3 --> P4["Step 4: Change Classification (SemVer)"]
-        P4 --> P5["Step 5: Execute Version Bump (bump_version.py)"]
-        P5 --> P6["Step 6: Draft Conventional Commit Message"]
-        P6 --> P7["Step 7: Maintain CHANGELOG.md"]
-        P7 --> P8["Step 8: Confirmation & Verification Gate"]
-        P8 --> P9["Step 9: Execute Git Commit & Release Tag"]
-        P9 --> P10["Step 10: Destination Resolution & Authenticated Push"]
+        subgraph Phase1["1. Pre-flight & Documentation Audit"]
+            P1["Step 1: Inspect Working Tree & Secrets"] --> P2["Step 2: README Synchronization Gate\n(Calls readme-r to detect staleness & merge)"]
+        end
+
+        subgraph Phase2["2. Staging & SemVer Increment"]
+            P2 --> P3["Step 3: Atomic Commit Analysis & Staging"]
+            P3 --> P4["Step 4: Change Classification (SemVer)"]
+            P4 --> P5["Step 5: Execute Version Bump (bump_version.py)"]
+        end
+
+        subgraph Phase3["3. Formatting & Verification Gate"]
+            P5 --> P6["Step 6: Draft Conventional Commit Message"]
+            P6 --> P7["Step 7: Maintain CHANGELOG.md"]
+            P7 --> P8["Step 8: Confirmation & Verification Gate"]
+        end
+
+        subgraph Phase4["4. Release & Delivery"]
+            P8 --> P9["Step 9: Execute Git Commit & Release Tag"]
+            P9 --> P10["Step 10: Destination Resolution & Authenticated Push"]
+        end
     end
 
     PluginBundle -.-> Pipeline
@@ -90,7 +104,7 @@ flowchart TD
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 ### Option A: Install from Local Source (Symlink)
 
@@ -116,11 +130,11 @@ git clone https://github.com/kemaltombul/git-release-toolkit.git ~/.gemini/confi
 ```
 
 > [!NOTE]
-> **Restart Requirement**: Newly installed or linked plugin directories are discovered when the Antigravity language server / application starts. Restart Antigravity after installing.
+> **Restart Requirement**: Newly installed or linked plugin directories are discovered when the Antigravity application or language server starts. Restart Antigravity after installing.
 
 ---
 
-## 💡 Usage & Examples
+## Usage & Examples
 
 ### Starter Prompts
 
@@ -154,7 +168,7 @@ Closes #142
 
 ---
 
-## 🛠️ CLI Tools
+## CLI Reference
 
 ### 1. `bump_version.py` (Multi-Ecosystem SemVer Bumper)
 
@@ -181,7 +195,7 @@ python3 skills/readme-r/scripts/detect_changes.py --json
 
 ---
 
-## ⚙️ Environment & Security Hygiene
+## Security & Environment Hygiene
 
 ### Protected Credentials
 
@@ -205,7 +219,7 @@ credentials.json
 
 ---
 
-## 📂 Repository Layout
+## Repository Layout
 
 ```text
 git-release-toolkit/
@@ -238,7 +252,6 @@ git-release-toolkit/
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
-

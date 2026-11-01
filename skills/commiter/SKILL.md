@@ -12,6 +12,50 @@ This skill guides the agent through an intelligent, safe, and structured git wor
 
 ---
 
+## Table of Contents
+
+- [Execution Workflow](#execution-workflow)
+- [Step 1: Inspect Working Tree, Secrets & Diffs](#step-1-inspect-working-tree-secrets--diffs)
+- [Step 2: README Synchronization Audit (via `readme-r`)](#step-2-readme-synchronization-audit-via-readme-r)
+- [Step 3: Atomic Commit Analysis & Staging](#step-3-atomic-commit-analysis--staging)
+- [Step 4: Change Classification & SemVer Calculation](#step-4-change-classification--semver-calculation)
+- [Step 5: Execute Version Bump (If Applicable)](#step-5-execute-version-bump-if-applicable)
+- [Step 6: Draft Detailed Conventional Commit Message](#step-6-draft-detailed-conventional-commit-message)
+- [Step 7: Maintain `CHANGELOG.md` (If Present)](#step-7-maintain-changelogmd-if-present)
+- [Step 8: Confirmation & Verification Gate](#step-8-confirmation--verification-gate)
+- [Step 9: Execute Git Commit](#step-9-execute-git-commit)
+- [Step 10: Push to Remote, Destination Resolution & Auth Control](#step-10-push-to-remote-destination-resolution--auth-control)
+
+---
+
+## Execution Workflow
+
+```mermaid
+flowchart TD
+    subgraph Phase1["1. Pre-flight & Documentation Gate"]
+        A["Step 1: Inspect Working Tree & Secrets Audit"] --> B["Step 2: README Synchronization Audit\n(Detect staleness & run readme-r contextual merge)"]
+    end
+
+    subgraph Phase2["2. Staging & Version Calculation"]
+        B --> C["Step 3: Atomic Commit Analysis & Staging\n(group files by logical concern)"]
+        C --> D["Step 4: Change Classification\n(Major / Minor / Patch / Skip)"]
+        D --> E["Step 5: Execute Version Bump\n(bump_version.py for Node/Plugin/Python/Rust/VERSION)"]
+    end
+
+    subgraph Phase3["3. Message Formulation & Review Gate"]
+        E --> F["Step 6: Draft Conventional Commit Message\n(Type, Scope, Why, Technical Breakdown)"]
+        F --> G["Step 7: Maintain CHANGELOG.md\n(Keep a Changelog format)"]
+        G --> H["Step 8: User Confirmation & Verification Gate\n(Preview diffs, version, and message)"]
+    end
+
+    subgraph Phase4["4. Commit, Tag & Authenticated Delivery"]
+        H --> I["Step 9: Execute Git Commit & Tag\n(Create signed/annotated commit and release tag)"]
+        I --> J["Step 10: Destination Resolution & Authenticated Push\n(Validate SSH/HTTPS auth, pre-flight dry run, push tags)"]
+    end
+```
+
+---
+
 ## Workflow Steps
 
 ### Step 1: Inspect Working Tree, Secrets & Diffs
