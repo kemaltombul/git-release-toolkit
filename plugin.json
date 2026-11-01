@@ -1,0 +1,12 @@
+{
+  "name": "git-release-toolkit",
+  "displayName": "Git & Release Toolkit",
+  "version": "1.0.0",
+  "description": "Unified Git commit hygiene, automated Semantic Versioning, README synchronization, and authenticated remote push management.",
+  "author": "Kemal Tombul",
+  "suggestedPrompts": [
+    "Review working tree diffs, synchronize README.md, and create atomic commits",
+    "Bump version, update CHANGELOG.md, and push release tags to origin",
+    "Audit repository secrets and verify Git remote authentication"
+  ]
+}
