@@ -6,7 +6,7 @@ This reference outlines the Conventional Commits specification (v1.0.0) format, 
 
 ## 1. Structure of a Conventional Commit
 
-Every commit message produced by the `committer` skill follows this structure:
+Every commit message produced by the `commiter` skill follows this structure:
 
 ```text
 <type>[optional scope]: <imperative description>

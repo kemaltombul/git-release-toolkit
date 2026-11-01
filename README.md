@@ -35,7 +35,7 @@ It solves three critical pain points in agentic software engineering:
 2. **Monolithic & Unstructured Commits**: Disparate features, bug fixes, and configuration changes frequently get mixed into opaque commits.
 3. **Accidental Credential Exposure**: Sensitive keys, certificates, or `.env` files can leak into public Git histories.
 
-By uniting **`committer`** (atomic staging, Conventional Commits, SemVer, remote auth push), **`readme-r`** (change-driven contextual documentation synchronization), and an **ambient enforcement rule (`rules/AGENTS.md`)**, this toolkit ensures every release is documented, atomic, tested, and secure.
+By uniting **`commiter`** (atomic staging, Conventional Commits, SemVer, remote auth push), **`readme-r`** (change-driven contextual documentation synchronization), and an **ambient enforcement rule (`rules/AGENTS.md`)**, this toolkit ensures every release is documented, atomic, tested, and secure.
 
 ---
 
@@ -43,10 +43,10 @@ By uniting **`committer`** (atomic staging, Conventional Commits, SemVer, remote
 
 | Component | Path | Type | Purpose |
 | :--- | :--- | :--- | :--- |
-| **`committer`** | [`skills/committer/`](./skills/committer/) | Skill | 10-step atomic git workflow, SemVer calculation, Conventional Commit generation, changelog updates, and authenticated push |
+| **`commiter`** | [`skills/commiter/`](./skills/commiter/) | Skill | 10-step atomic git workflow, SemVer calculation, Conventional Commit generation, changelog updates, and authenticated push |
 | **`readme-r`** | [`skills/readme-r/`](./skills/readme-r/) | Skill | Automated Git diff inspection, contextual documentation merging, and hierarchical sub-README creation |
 | **`AGENTS.md`** | [`rules/AGENTS.md`](./rules/AGENTS.md) | Ambient Rule | Always-on rule mandating that documentation stays in sync with code changes across all conversation turns |
-| **`bump_version.py`** | [`skills/committer/scripts/bump_version.py`](./skills/committer/scripts/bump_version.py) | CLI Script | Zero-dependency SemVer bumper for Node.js (`package.json`), Python (`pyproject.toml`), Rust (`Cargo.toml`), and plain-text `VERSION` files |
+| **`bump_version.py`** | [`skills/commiter/scripts/bump_version.py`](./skills/commiter/scripts/bump_version.py) | CLI Script | Zero-dependency SemVer bumper for Node.js (`package.json`), Antigravity plugins (`plugin.json`), Python (`pyproject.toml`), Rust (`Cargo.toml`), and plain-text `VERSION` files |
 | **`detect_changes.py`** | [`skills/readme-r/scripts/detect_changes.py`](./skills/readme-r/scripts/detect_changes.py) | CLI Script | Fast repository inspector that outputs structured JSON diffs and target README paths |
 
 ---
@@ -60,7 +60,7 @@ flowchart TD
         PJ["plugin.json (Manifest)"]
         AR["rules/AGENTS.md\n(Ambient Rule: enforce README sync on changes)"]
         
-        subgraph S1["skills/committer"]
+        subgraph S1["skills/commiter"]
             C_SKILL["SKILL.md (10-Step Runbook)"]
             C_BUMP["scripts/bump_version.py"]
             C_REFS["references/ (SemVer, Auth, Conventional Commits)"]
@@ -126,7 +126,7 @@ git clone https://github.com/kemaltombul/git-release-toolkit.git ~/.gemini/confi
 
 You can invoke the toolkit with conversational prompts or slash commands:
 
-- `/committer`
+- `/commiter`
 - `/readme-r`
 - *"Review working tree diffs, synchronize README.md, and create atomic commits"*
 - *"Bump version to 1.1.0, update CHANGELOG.md, and push release tags to origin"*
@@ -160,13 +160,13 @@ Closes #142
 
 ```bash
 # Check detected version
-python3 skills/committer/scripts/bump_version.py --check
+python3 skills/commiter/scripts/bump_version.py --check
 
 # Dry-run a minor bump
-python3 skills/committer/scripts/bump_version.py --bump minor --dry-run
+python3 skills/commiter/scripts/bump_version.py --bump minor --dry-run
 
 # Apply a patch bump and output JSON
-python3 skills/committer/scripts/bump_version.py --bump patch --json
+python3 skills/commiter/scripts/bump_version.py --bump patch --json
 ```
 
 ### 2. `detect_changes.py` (Repository Change Inspector)
@@ -215,7 +215,7 @@ git-release-toolkit/
 ├── rules/
 │   └── AGENTS.md                              # Ambient rule for continuous README sync
 └── skills/
-    ├── committer/
+    ├── commiter/
     │   ├── README.md
     │   ├── SKILL.md                           # 10-step atomic workflow runbook
     │   ├── references/
@@ -241,3 +241,4 @@ git-release-toolkit/
 ## 📄 License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+

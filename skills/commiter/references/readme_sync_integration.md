@@ -1,6 +1,6 @@
 # README Synchronization & Pre-Commit Integration
 
-This reference describes the architectural design and operational protocol for integrating the `readme-r` automatic documentation synchronization skill into the `committer` git workflow.
+This reference describes the architectural design and operational protocol for integrating the `readme-r` automatic documentation synchronization skill into the `commiter` git workflow.
 
 ---
 
@@ -11,13 +11,13 @@ During fast-paced software development and agentic code modification:
 - `README.md` files frequently become outdated because documentation updates are deferred or overlooked.
 - Release tags and version bumps are pushed with stale or incomplete documentation.
 
-The `git-release-toolkit` prevents documentation drift by embedding a **README Synchronization Audit Gate (Step 2)** directly into the pre-commit staging pipeline of `committer`.
+The `git-release-toolkit` prevents documentation drift by embedding a **README Synchronization Audit Gate (Step 2)** directly into the pre-commit staging pipeline of `commiter`.
 
 ---
 
 ## 2. Helper Resolution Protocol
 
-When `committer` executes change detection, it attempts to resolve `detect_changes.py` through the following precedence:
+When `commiter` executes change detection, it attempts to resolve `detect_changes.py` through the following precedence:
 
 1. **Sibling Skill in Plugin Bundle**:
    `../readme-r/scripts/detect_changes.py`
@@ -53,3 +53,4 @@ When updating existing documentation:
   - CLI usage tables
   - Submodule directory maps
 - **Generate if Missing**: If a project or new submodule has no `README.md`, scaffold a complete front-page using the standard blueprint in `../readme-r/resources/standard_template.md`.
+

@@ -4,7 +4,7 @@
 Whenever you modify, add, or refactor code, package dependencies, environment configurations, or project directory structures:
 You **MUST** evaluate and update the relevant `README.md` file(s) using the bundled `readme-r` skill before concluding your task or presenting your final response.
 
-When preparing to commit changes or bump releases, use the bundled `committer` skill to enforce atomic staging, Conventional Commits, Semantic Versioning, and authenticated remote push validation.
+When preparing to commit changes or bump releases, use the bundled `commiter` skill to enforce atomic staging, Conventional Commits, Semantic Versioning, and authenticated remote push validation.
 
 ---
 
@@ -24,3 +24,4 @@ Automatically invoke the `readme-r` workflow when any of the following occur dur
    - For new modules or projects without a README: Generate a comprehensive README using the standard template in `skills/readme-r/resources/standard_template.md`.
 3. **Hierarchical Scope**: Update the root `README.md`. If a submodule or package was added or altered, update or create that submodule's local `README.md`.
 4. **Pre-Commit Verification**: Ensure documentation changes are reviewed and staged either alongside the feature commit or as an atomic `docs:` commit.
+

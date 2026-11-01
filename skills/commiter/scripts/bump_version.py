@@ -3,6 +3,7 @@
 Multi-ecosystem SemVer bumper.
 Supports:
   - package.json (Node.js)
+  - plugin.json (Antigravity Plugin)
   - pyproject.toml (Python)
   - Cargo.toml (Rust)
   - VERSION (Plain text)
@@ -48,16 +49,17 @@ def find_version_file(search_dir: str = ".") -> Tuple[Optional[str], Optional[st
     Finds the first supported version file in search_dir.
     Returns: (file_type, file_path, current_version)
     """
-    # 1. package.json
-    pkg_path = os.path.join(search_dir, "package.json")
-    if os.path.isfile(pkg_path):
-        try:
-            with open(pkg_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-                if "version" in data and isinstance(data["version"], str):
-                    return "package.json", pkg_path, data["version"]
-        except Exception:
-            pass
+    # 1. package.json / plugin.json
+    for json_file in ("package.json", "plugin.json"):
+        json_path = os.path.join(search_dir, json_file)
+        if os.path.isfile(json_path):
+            try:
+                with open(json_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    if "version" in data and isinstance(data["version"], str):
+                        return json_file, json_path, data["version"]
+            except Exception:
+                pass
 
     # 2. pyproject.toml
     pyproject_path = os.path.join(search_dir, "pyproject.toml")
@@ -98,7 +100,7 @@ def find_version_file(search_dir: str = ".") -> Tuple[Optional[str], Optional[st
     return None, None, None
 
 def update_version_file(file_type: str, file_path: str, new_version: str) -> None:
-    if file_type == "package.json":
+    if file_type in ("package.json", "plugin.json"):
         with open(file_path, "r", encoding="utf-8") as f:
             lines = f.readlines()
         replaced = False

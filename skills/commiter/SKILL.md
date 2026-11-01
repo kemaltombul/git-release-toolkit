@@ -1,12 +1,12 @@
 ---
-name: committer
+name: commiter
 description: >-
   Use this skill whenever the user asks to commit changes, create a git commit, bump project versions,
   synchronize README documentation via readme-r, write detailed Conventional Commit messages, organize atomic commits,
   maintain CHANGELOG.md, or safely push commits and tags to remote repositories with authentication and environment validation.
 ---
 
-# Committer Skill Runbook
+# Commiter Skill Runbook
 
 This skill guides the agent through an intelligent, safe, and structured git workflow: analyzing repository changes, auditing environment variables and secrets, verifying README documentation synchronization via `readme-r`, splitting unrelated modifications into atomic commits, calculating Semantic Version bumps across project ecosystems, formatting detailed Conventional Commit messages, maintaining `CHANGELOG.md`, previewing all staged diffs for user confirmation prior to committing, and validating remote destinations & authentication to push commits and tags.
 
@@ -87,7 +87,7 @@ Use the automated version bumper helper script:
 1. **Check Current Version**:
    ```bash
    python3 scripts/bump_version.py --check
-   # (Or: python3 ~/.gemini/config/plugins/git-release-toolkit/skills/committer/scripts/bump_version.py --check)
+   # (Or: python3 ~/.gemini/config/plugins/git-release-toolkit/skills/commiter/scripts/bump_version.py --check)
    ```
 2. **Dry-Run Proposed Bump**:
    ```bash

@@ -1,6 +1,6 @@
 # Semantic Versioning 2.0.0 & Changelog Maintenance
 
-This reference guide details SemVer 2.0.0 calculation rules, supported project configuration files, and `CHANGELOG.md` format standards used by the `committer` skill.
+This reference guide details SemVer 2.0.0 calculation rules, supported project configuration files, and `CHANGELOG.md` format standards used by the `commiter` skill.
 
 ---
 
@@ -25,9 +25,9 @@ A Semantic Version takes the format `MAJOR.MINOR.PATCH`:
 
 ## 2. Multi-Ecosystem File Support
 
-The `committer` skill automatically discovers and updates version files in order of precedence:
+The `commiter` skill automatically discovers and updates version files in order of precedence:
 
-1. **Node.js**: `package.json` (`"version": "x.y.z"`). If `package-lock.json` exists, running `npm --package-lock-only` or updating version keeps it in sync.
+1. **Node.js / Plugin Manifests**: `package.json` or `plugin.json` (`"version": "x.y.z"`). If `package-lock.json` exists, running `npm --package-lock-only` or updating version keeps it in sync.
 2. **Python**: `pyproject.toml` (`version = "x.y.z"` under `[project]` or `[tool.poetry]`).
 3. **Rust**: `Cargo.toml` (`version = "x.y.z"` under `[package]`).
 4. **Generic**: `VERSION` (plain text containing solely the semver string).

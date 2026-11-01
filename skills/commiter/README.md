@@ -1,4 +1,4 @@
-# Committer Skill
+# Commiter Skill
 
 <p align="center">
   <strong>Intelligent Git workflow automation: atomic staging, Conventional Commits, multi-ecosystem SemVer, secret leak prevention, README synchronization, and authenticated remote push management.</strong>
@@ -29,9 +29,9 @@
 
 ## 🌟 Overview
 
-The **Committer Skill** (`committer`) is a structured, production-ready Git automation skill designed for AI coding agents and human developers. It standardizes the end-to-end version control lifecycle: from inspecting changes and preventing secret leaks, to validating README documentation synchronization, organizing atomic commits, calculating Semantic Version increments across language ecosystems, maintaining changelogs, and safely pushing to authenticated remote repositories.
+The **Commiter Skill** (`commiter`) is a structured, production-ready Git automation skill designed for AI coding agents and human developers. It standardizes the end-to-end version control lifecycle: from inspecting changes and preventing secret leaks, to validating README documentation synchronization, organizing atomic commits, calculating Semantic Version increments across language ecosystems, maintaining changelogs, and safely pushing to authenticated remote repositories.
 
-In modern software engineering and agentic workflows, monolithic commits and unvetted pushes often introduce broken histories, sensitive credential leaks, or untracked releases. The Committer Skill establishes a rigorous, fail-safe runbook with explicit confirmation gates, ensuring that every commit is atomic, descriptive, traceable, and secure.
+In modern software engineering and agentic workflows, monolithic commits and unvetted pushes often introduce broken histories, sensitive credential leaks, or untracked releases. The Commiter Skill establishes a rigorous, fail-safe runbook with explicit confirmation gates, ensuring that every commit is atomic, descriptive, traceable, and secure.
 
 ---
 
@@ -41,7 +41,7 @@ In modern software engineering and agentic workflows, monolithic commits and unv
 - 📖 **README Synchronization Gate**: Integrates with `readme-r` to audit documentation staleness before staging. Ensures new features, dependencies, or environment variables are documented before commits or tags are generated.
 - 🧩 **Atomic Commit Decomposition**: Intelligently groups disparate changes (e.g., bug fixes vs. feature additions) into separate, focused commits rather than sweeping entire trees into messy single commits.
 - 📝 **Strict Conventional Commits (v1.0.0)**: Generates highly detailed commit messages with imperative subjects, deep "why" problem statements, and itemized technical component breakdowns.
-- 🔢 **Multi-Ecosystem Semantic Versioning 2.0.0**: Bundles a standalone Python helper script (`scripts/bump_version.py`) capable of parsing and incrementing version numbers in `package.json` (Node.js), `pyproject.toml` (Python), `Cargo.toml` (Rust), and `VERSION` files.
+- 🔢 **Multi-Ecosystem Semantic Versioning 2.0.0**: Bundles a standalone Python helper script (`scripts/bump_version.py`) capable of parsing and incrementing version numbers in `package.json` (Node.js), `plugin.json` (Antigravity Plugins), `pyproject.toml` (Python), `Cargo.toml` (Rust), and `VERSION` files.
 - 📋 **Automated Changelog Maintenance**: Updates `CHANGELOG.md` adhering to the [Keep a Changelog](https://keepachangelog.com/) standard, classifying changes into *Added*, *Changed*, *Fixed*, *Deprecated*, *Removed*, *Security*, and *Breaking Changes*.
 - 🚦 **Interactive Preview & Approval Gate**: Displays staged files, version bump diffs, and formatted commit messages for review prior to executing git commands.
 - 🚀 **Remote Destination & Auth Control**: Resolves remotes (`origin`, `upstream`), tests SSH and HTTPS authentication protocols (via `ssh -T` and `gh auth status`), executes non-destructive dry-run pushes, and manages atomic pushes with annotated tags (`--follow-tags`).
@@ -50,7 +50,7 @@ In modern software engineering and agentic workflows, monolithic commits and unv
 
 ## 🏗️ Workflow Architecture
 
-The Committer skill executes an end-to-end 10-step operational pipeline:
+The Commiter skill executes an end-to-end 10-step operational pipeline:
 
 ```mermaid
 flowchart TD
@@ -70,7 +70,7 @@ flowchart TD
 ## 📂 Project Structure
 
 ```text
-skills/committer/
+skills/commiter/
 ├── README.md                       # Comprehensive skill documentation
 ├── SKILL.md                        # Master skill definition and execution runbook
 ├── references/                     # Detailed architectural specifications and guidelines
@@ -100,7 +100,7 @@ skills/committer/
 
 Simply invoke the skill via slash command or conversational request:
 
-- `/committer`
+- `/commiter`
 - *"Review my unstaged changes, synchronize documentation, and create atomic commits."*
 - *"Bump the minor version, update CHANGELOG.md, and commit with a Conventional Commit message."*
 - *"Check authentication and safely push the latest release tags to origin."*
@@ -109,7 +109,7 @@ Simply invoke the skill via slash command or conversational request:
 
 ## 🛠️ Version Bumper CLI
 
-The bundled [`scripts/bump_version.py`](./scripts/bump_version.py) provides zero-dependency SemVer management across Node.js, Python, Rust, and plain-text version files.
+The bundled [`scripts/bump_version.py`](./scripts/bump_version.py) provides zero-dependency SemVer management across Node.js, Antigravity plugins, Python, Rust, and plain-text version files.
 
 ```bash
 # Check current project version
@@ -153,7 +153,7 @@ git ls-files | grep -E '\.env$|\.key$|\.pem$|credentials\.json$'
 ## 📚 References & Specifications
 
 - [Master Skill Runbook (`SKILL.md`)](./SKILL.md): Comprehensive step-by-step instructions for AI agents.
-- [README Synchronization Integration Guide](./references/readme_sync_integration.md): Coordination protocol between `committer` and `readme-r`.
+- [README Synchronization Integration Guide](./references/readme_sync_integration.md): Coordination protocol between `commiter` and `readme-r`.
 - [Conventional Commits Specification](./references/conventional_commits.md): Types, scopes, imperative subjects, and breaking change rules.
 - [Semantic Versioning Rules & Changelog Maintenance](./references/semver_rules.md): SemVer 2.0.0 decision matrix and Keep a Changelog mapping standards.
 - [Remote Authentication, Environment & Push Management](./references/remote_auth_env.md): SSH and HTTPS authentication diagnostics, secret auditing, and safe push commands.
